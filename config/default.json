@@ -1,0 +1,9 @@
+{
+	"storage": {
+		"host": "database",
+		"port": 3306,
+		"database": "petshop",
+		"username": "petshop",
+		"password": "petshop"
+	}
+}

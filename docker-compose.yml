@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  database:
+    image: mariadb:focal
+    container_name: curso-nodejs-petshop-database
+    network_mode: bridge
+    environment:
+      - MARIADB_ROOT_PASSWORD=petshop
+      - MARIADB_DATABASE=petshop
+      - MARIADB_USER=petshop
+      - MARIADB_PASSWORD=petshop
+    ports:
+      - 3306:3306
+    restart: "no"
+  webserver:
+    image: node:lts
+    container_name: curso-nodejs-petshop-webserver
+    network_mode: bridge
+    links: 
+      - database:database
+    environment:
+      - NODE_ENV=development
+    command: "npm start"
+    working_dir: /home/petshop/app
+    volumes: 
+      - ./:/home/petshop/app
+    ports:
+      - 3000:3000
+      # Porta 9229 é a porta de depuração do node
+      - 9229:9229
+    depends_on: 
+      - database
+    restart: "no"
