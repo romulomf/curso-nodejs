@@ -1,21 +1,25 @@
 import express from 'express';
-import bodyParser from 'body-parser';
 import fileUpload from 'express-fileupload';
-import {petshopDatabase} from './data/index';
+import {petshopDatabase, petshopMappings} from './data/index';
 import {CallController, PetController} from './controllers/index';
 
 const app: express.Express = express();
 
-const sequelize = petshopDatabase();
-sequelize.sync();
+const server = app.listen(3000, async () => {
+	console.log('o servidor express está em execução!')
+	const sequelize = petshopDatabase();
+	try {
+		await sequelize.authenticate();
+		petshopMappings(sequelize);
+		console.info('sincronização com o banco de dados realizada com êxito');
+	} catch (error) {
+		console.error('não foi possível conectar com o banco de dados', error);
+	}
+});
 
-app.listen(3000, () => console.log('o servidor express está em execução!'));
-
+app.use(express.urlencoded({extended: true}));
 app.use(express.json());
-
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
-app.use(bodyParser.text());
+app.use(express.text());
 
 app.use(fileUpload({
 	createParentPath: true
@@ -23,3 +27,7 @@ app.use(fileUpload({
 
 app.use('/atendimento', CallController);
 app.use('/pet', PetController);
+
+process.on('SIGTERM', () => {
+	server.close(() => console.info('O servidor express foi encerrado.'));
+});

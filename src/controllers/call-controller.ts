@@ -1,7 +1,6 @@
 import express from 'express';
 import moment from 'moment';
 import { CallDto } from '../dtos/index';
-import { Call } from '../models/index';
 import { CallRepository } from '../repository/index';
 
 const router: express.Router = express.Router();
@@ -24,8 +23,7 @@ router.route('/')
 		let dto: CallDto = req.body;
 		dto.Date = new Date(moment(dto.Date, 'DD/MM/YYYY').format('YYYY-MM-DD'));
 		try {
-			let call = Call.FromDto(dto);
-			call = await CallRepository.save(call);
+			const call = await CallRepository.save(dto);
 			res.status(201).send(`Criado o atendimento ${call.Id}`);
 		} catch(error) {
 			res.status(400).send(`Erro na na criação do atendimento:\n${error}`)

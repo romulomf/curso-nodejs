@@ -1,28 +1,42 @@
-version: '3.8'
+version: '3.9'
+networks:
+  curso-nodejs-network:
+    name: curso-nodejs
+    driver: bridge
 services:
   database:
     image: mariadb:focal
     container_name: curso-nodejs-petshop-database
-    network_mode: bridge
+    hostname: petshop-database
+    networks:
+      curso-nodejs-network:
     environment:
-      - MARIADB_ROOT_PASSWORD=petshop
-      - MARIADB_DATABASE=petshop
-      - MARIADB_USER=petshop
-      - MARIADB_PASSWORD=petshop
+      - MARIADB_ROOT_PASSWORD=${DB_ROOT}
+      - MARIADB_DATABASE=${DB_NAME}
+      - MARIADB_USER=${DB_USER}
+      - MARIADB_PASSWORD=${DB_PASS}
+    healthcheck:
+      test: ["CMD", "mariadb", "--database=${DB_NAME}", "--user=${DB_USER}", "--password=${DB_PASS}", "--port=${DB_PORT}"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
     ports:
       - 3306:3306
     restart: "no"
+    # TODO fazer um script que verifica se o status de inicialização do banco de dados antes de subir a aplicação https://docs.docker.com/compose/startup-order/.
   webserver:
+    user: node
     image: node:lts
     container_name: curso-nodejs-petshop-webserver
-    network_mode: bridge
-    links: 
-      - database:database
+    hostname: petshop-webserver
+    networks:
+      curso-nodejs-network:
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=${ENVIRONMENT}
     command: "npm start"
     working_dir: /home/petshop/app
-    volumes: 
+    volumes:
       - ./:/home/petshop/app
     ports:
       - 3000:3000

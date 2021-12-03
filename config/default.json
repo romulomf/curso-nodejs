@@ -1,9 +1,23 @@
 {
-	"storage": {
-		"host": "database",
-		"port": 3306,
-		"database": "petshop",
+	"development": {
 		"username": "petshop",
-		"password": "petshop"
+		"password": "petshop",
+		"database": "petshop",
+		"host": "database",
+		"dialect": "mariadb"
+	},
+	"test": {
+		"username": "petshop",
+		"password": "petshop",
+		"database": "petshop",
+		"host": "database",
+		"dialect": "mariadb"
+	},
+	"production": {
+		"username": "petshop",
+		"password": "petshop",
+		"database": "petshop",
+		"host": "database",
+		"dialect": "mariadb"
 	}
 }

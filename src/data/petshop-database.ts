@@ -3,12 +3,12 @@ import { Sequelize } from 'sequelize';
 
 function petshopDatabase(): Sequelize {
 	return new Sequelize({
-		host: config.get('storage.host'),
-		port: config.get('storage.port'),
-		database: config.get('storage.database'),
-		username: config.get('storage.password'),
-		password: config.get('storage.password'),
-		dialect: 'mariadb',
+		host: config.get('development.host'),
+		port: 3306,
+		database: config.get('development.database'),
+		username: config.get('development.username'),
+		password: config.get('development.password'),
+		dialect: config.get('development.dialect'),
 		logging: console.log,
 		pool: {
 			min: 2,

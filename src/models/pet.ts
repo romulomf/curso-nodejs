@@ -36,6 +36,9 @@ class Pet extends Model {
 		Type: string
 	};
 
+	/**
+	 * @deprecated este método não deve mais ser utilizado.
+	 */
 	public static FromDto(dto: PetDto): Pet {
 		const pet = new Pet();
 		pet.Id = dto.Id;
@@ -43,32 +46,14 @@ class Pet extends Model {
 		pet.Profile = dto.Profile;
 		return pet;
 	}
+
+	public ToDto(): PetDto {
+		return {
+			Id: this.Id,
+			Name: this.Name,
+			Profile: this.Profile
+		};
+	}
 }
-
-Pet.init({
-	_id: {
-		field: 'ID',
-		type: DataTypes.INTEGER.UNSIGNED,
-		autoIncrementIdentity: true,
-		primaryKey: true,
-		allowNull: false,
-		comment: 'Identificador exclusivo'
-	},
-	_name: {
-		field: 'NAME',
-		type: DataTypes.STRING,
-		allowNull: false,
-		comment: 'Nome / Apelido do Pet'
-	},
-}, {
-	sequelize,
-	tableName: 'PETS',
-	timestamps: true,
-	createdAt: 'CREATED_AT',
-	updatedAt: 'UPDATED_AT',
-	version: 'VERSION'
-});
-
-Pet.sync();
 
 export default Pet;

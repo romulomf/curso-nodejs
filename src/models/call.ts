@@ -80,6 +80,9 @@ class Call extends Model {
 		this._observations = observations;
 	}
 
+	/**
+	 * @deprecated este método não deve mais ser utilizado.
+	 */
 	public static FromDto(dto: CallDto): Call {
 		const call = new Call();
 		call.Id = dto.Id;
@@ -104,61 +107,5 @@ class Call extends Model {
 		};
 	}
 }
-
-Call.init({
-	_id: {
-		field: 'ID',
-		type: DataTypes.INTEGER.UNSIGNED,
-		autoIncrementIdentity: true,
-		primaryKey: true,
-		allowNull: false,
-		comment: 'Identificador exclusivo'
-	},
-	_client: {
-		field: 'CLIENT',
-		type: DataTypes.STRING,
-		allowNull: false,
-		comment: 'Cliente'
-	},
-	_date: {
-		field: 'DATE',
-		type: DataTypes.DATE,
-		allowNull: false,
-		comment: 'Data / Hora do agendamento'
-	},
-	_pet: {
-		field: 'PET',
-		type: DataTypes.STRING,
-		allowNull: false,
-		comment: 'Nome / Apelido do pet'
-	},
-	_service: {
-		field: 'SERVICE',
-		type: DataTypes.STRING,
-		allowNull: true,
-		comment: 'O serviço que deve ser feito'
-	},
-	_status: {
-		field: 'STATUS',
-		type: DataTypes.STRING,
-		allowNull: false,
-		comment: 'A situação do agendamento'
-	},
-	_observations: {
-		field: 'OBSERVATIONS',
-		type: DataTypes.STRING,
-		allowNull: true,
-		comment: 'Notas adicionais sobre o agendamento'
-	}
-}, {
-	sequelize,
-	tableName: 'CALLS',
-	timestamps: true,
-	createdAt: 'CREATED_AT',
-	updatedAt: 'UPDATED_AT',
-	version: 'VERSION'
-});
-
-Call.sync();
 
 export default Call;
