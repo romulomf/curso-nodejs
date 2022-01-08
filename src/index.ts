@@ -28,6 +28,9 @@ app.use(fileUpload({
 app.use('/atendimento', CallController);
 app.use('/pet', PetController);
 
-process.on('SIGTERM', () => {
-	server.close(() => console.info('O servidor express foi encerrado.'));
+process.on('SIGTERM', (signal: number) => {
+	server.close(() => {
+		console.log(`O servidor foi parado pelo sinal ${signal}.`);
+		process.exit(128 + signal);
+	});
 });

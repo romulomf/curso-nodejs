@@ -14,7 +14,8 @@
 			"localRoot": "${workspaceFolder}",
 			"remoteRoot": "/home/petshop/app",
 			"skipFiles": [
-				"<node_internals>/**"
+				"<node_internals>/**",
+				"node_modules/**"
 			]
 		}
 	]

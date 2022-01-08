@@ -4,7 +4,7 @@
   "description": "Curso de nodeJS da Alura",
   "main": "./src/index.js",
   "scripts": {
-    "start": "npx nodemon -L -P 500 -e ts -w ./src -x node --inspect=0.0.0.0:9229 -r ts-node/register src/index.ts",
+    "start": "yarn run nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -30,9 +30,11 @@
     "@types/express-fileupload": "^1.1.7",
     "@types/node": "^14.17.29",
     "@types/validator": "^13.6.5",
+    "@yarnpkg/sdks": "^2.5.1-rc.6",
     "nodemon": "^2.0.15",
     "sequelize-cli": "^6.2.0",
     "ts-node": "^10.4.0",
-    "typescript": "^4.4.4"
-  }
+    "typescript": "^4.5.4"
+  },
+  "packageManager": "yarn@3.1.1"
 }
