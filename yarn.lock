@@ -286,6 +286,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/nodemon@npm:^1.19.1":
+  version: 1.19.1
+  resolution: "@types/nodemon@npm:1.19.1"
+  dependencies:
+    "@types/node": "*"
+  checksum: 62d0efcec06509ded373f6f5bbc0310901e23028ccc7828c703030b011c4bd17ae188d8387b8eb83bcc1e4e6006ec23572965f5d95aef10f5015ea376daaa1e7
+  languageName: node
+  linkType: hard
+
 "@types/qs@npm:*":
   version: 6.9.7
   resolution: "@types/qs@npm:6.9.7"
@@ -1124,6 +1133,7 @@ __metadata:
     "@types/express": ^4.17.13
     "@types/express-fileupload": ^1.1.7
     "@types/node": ^14.17.29
+    "@types/nodemon": ^1.19.1
     "@types/validator": ^13.6.5
     "@yarnpkg/sdks": ^2.5.1-rc.6
     body-parser: ^1.19.0
