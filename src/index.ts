@@ -10,7 +10,7 @@ const server = app.listen(3000, async () => {
 	const sequelize = petshopDatabase();
 	try {
 		await sequelize.authenticate();
-		petshopMappings(sequelize);
+		await petshopMappings(sequelize);
 		console.info('sincronização com o banco de dados realizada com êxito');
 	} catch (error) {
 		console.error('não foi possível conectar com o banco de dados', error);

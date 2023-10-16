@@ -1,7 +1,7 @@
 import { DataTypes, Sequelize } from "sequelize";
 import { Call, Pet } from "../models/index";
 
-function petshopMappings(sequelize: Sequelize): void {
+async function petshopMappings(sequelize: Sequelize): Promise<void> {
 	Call.init({
 		Id: {
 			field: 'ID',
@@ -23,11 +23,15 @@ function petshopMappings(sequelize: Sequelize): void {
 			allowNull: false,
 			comment: 'Data e Hora do agendamento'
 		},
-		Pet: {
-			field: 'PET',
-			type: DataTypes.STRING,
+		PetId: {
+			field: 'PET_ID',
+			type: DataTypes.INTEGER,
 			allowNull: false,
-			comment: 'Nome ou Apelido do pet'
+			references: {
+				model: 'Call',
+				key: 'ID'
+			},
+			comment: 'Código do pet'
 		},
 		Service: {
 			field: 'SERVICE',
@@ -55,8 +59,6 @@ function petshopMappings(sequelize: Sequelize): void {
 		updatedAt: 'UPDATED_AT',
 		version: 'VERSION'
 	});
-	
-	Call.sync();
 
 	Pet.init({
 		Id: {
@@ -73,6 +75,18 @@ function petshopMappings(sequelize: Sequelize): void {
 			allowNull: false,
 			comment: 'Nome ou Apelido do Pet'
 		},
+		FileData: {
+			field: 'FILEDATA',
+			type: DataTypes.BLOB,
+			allowNull: true,
+			comment: 'Dados da imagem de perfil do pet'
+		},
+		FileName: {
+			field: 'FILENAME',
+			type: DataTypes.STRING,
+			allowNull: true,
+			comment: 'Nome do arquivo de imagem do pet'
+		}
 	}, {
 		sequelize,
 		tableName: 'PETS',
@@ -81,9 +95,19 @@ function petshopMappings(sequelize: Sequelize): void {
 		updatedAt: 'UPDATED_AT',
 		version: 'VERSION'
 	});
+
+	Call.belongsTo(Pet, {
+		foreignKey: 'PetId',
+		as: 'Pet'
+	});
 	
+	Pet.hasMany(Call, {
+		as: 'Pet',
+	});
+
+	Call.sync();
+
 	Pet.sync();
 }
-
 
 export default petshopMappings;

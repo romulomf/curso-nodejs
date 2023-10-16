@@ -38,7 +38,7 @@ services:
     # O comando de inicialização aqui deve ser o mesmo que é usado no nodemon, mas não invocar o nodemon explicitamente, pois a saída correta, isto é, o encerramento
     # normal do container e finalização do servidor express, só irá funcionar com o container iniciando com o comando do node e não do nodemon.
     #
-    command: "yarn run nodemon"
+    command: ["./wait-for-it.sh", "-h", "database", "-p", "3306", "-t", "45", "--", "yarn", "run", "nodemon"]
     working_dir: /home/petshop/app
     volumes:
       - ./:/home/petshop/app
